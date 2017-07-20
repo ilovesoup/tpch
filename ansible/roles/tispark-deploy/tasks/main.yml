@@ -1,7 +1,7 @@
 ---
 
 - name: push to gateway since first its slow...
-  shell: scp -P 21322 /Users/ilovesoup1/workspace/pingcap/tispark/target/tispark-0.1.0-SNAPSHOT-jar-with-dependencies.jar pingcap@office.pingcap.net:~/tispark-0.1.0-SNAPSHOT-jar
+  shell: scp -P 21322  /Users/ilovesoup1/workspace/pingcap/src/github.com/pingcap/tispark/target/tispark-0.1.0-SNAPSHOT-jar-with-dependencies.jar pingcap@office.pingcap.net:~/tispark-0.1.0-SNAPSHOT-jar
   delegate_to: localhost
 
 - name: Copy jar
