@@ -22,7 +22,13 @@ object TestFramework {
     val tests: Array[Tpch] = Array(
       new Tpch1(spark, prop),
       new Tpch2(spark, prop),
-      new Tpch3(spark, prop)
+      new Tpch3(spark, prop),
+      new Tpch5(spark, prop),
+      new Tpch6(spark, prop),
+      new Tpch7(spark, prop),
+      new Tpch8(spark, prop),
+      new Tpch9(spark, prop),
+      new Tpch10(spark, prop)
     )
 
     tests.foreach {

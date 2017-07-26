@@ -16,18 +16,20 @@ abstract class Tpch(val spark: SparkSession, val prop: Properties) {
   def testName(): String
 
   def test() = {
-    println("Query TiSpark")
+    println("================= Query TiSpark =================\n")
     val actual: List[List[Any]] = querySpark()
-    println("Query TiDB")
+    println("================= Query TiDB =================\n")
     val baseline: List[List[Any]] = queryTiDB(prop, "tpch", tidbQuery)
 
-    println("TiSpark")
-    printResult(actual)
-    println("TiDB")
-    printResult(baseline)
-
     val result = compResult(actual, baseline)
-    println("result = " + result)
+    if (!result) {
+      println("================= TiSpark =================\n")
+      printResult(actual)
+      println("================= TiDB =================\n")
+      printResult(baseline)
+    }
+
+    println(testName + " result: " + result)
   }
 
 
