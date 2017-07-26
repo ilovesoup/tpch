@@ -8,7 +8,6 @@ import org.apache.spark.sql.SparkSession
   * Created by ilovesoup1 on 26/07/2017.
   */
 class Tpch10(spark: SparkSession, prop: Properties) extends Tpch(spark, prop) {
-  override def testName() = "Tpch10"
 
   override def sparkQuery =
     """select

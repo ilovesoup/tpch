@@ -8,8 +8,6 @@ import org.apache.spark.sql.SparkSession
   * Created by ilovesoup1 on 26/07/2017.
   */
 class Tpch1(spark: SparkSession, prop: Properties) extends Tpch(spark, prop) {
-  override def testName() = "Tpch1"
-
   override def sparkQuery =
     """select
       |   l_returnflag,
