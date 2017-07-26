@@ -13,7 +13,7 @@ abstract class Tpch(val spark: SparkSession, val prop: Properties) {
 
   protected def tidbQuery: String
   protected def sparkQuery: String
-  def testName(): String
+  def testName(): String = getClass.getSimpleName
 
   def test() = {
     println("================= Query TiSpark =================\n")
