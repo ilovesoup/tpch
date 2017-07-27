@@ -94,7 +94,7 @@ abstract class Tpch(val spark: SparkSession, val prop: Properties) {
   def querySpark(): List[List[Any]] = {
     spark.sql(sparkQuery).collect().map(row => {
       val rowRes = ArrayBuffer.empty[Any]
-      for (i <- 0 to row.length - 1) {
+      for (i <- 0 until row.length) {
         rowRes += row.get(i)
       }
       rowRes.toList
@@ -106,18 +106,18 @@ abstract class Tpch(val spark: SparkSession, val prop: Properties) {
     val jdbcHostname = prop.getProperty("tidbaddr")
     val jdbcPort = Integer.parseInt(prop.getProperty("tidbport"))
 
-    val jdbcUrl = s"jdbc:mysql://${jdbcHostname}:${jdbcPort}/${jdbcDatabase}?user=${jdbcUsername}"
+    val jdbcUrl = s"jdbc:mysql://$jdbcHostname:$jdbcPort/$jdbcDatabase?user=$jdbcUsername"
     val connection = DriverManager.getConnection(jdbcUrl, jdbcUsername, "")
     val statement = connection.createStatement()
     val resultSet = statement.executeQuery(query)
-    val rsMetaData = resultSet.getMetaData();
+    val rsMetaData = resultSet.getMetaData
 
     val retSet = ArrayBuffer.empty[List[Any]]
     while (resultSet.next()) {
       val row = ArrayBuffer.empty[Any]
 
       for (i <- 1 to rsMetaData.getColumnCount) {
-        row += resultSet.getObject(i)
+        row +=  resultSet.getObject(i)
       }
       retSet += row.toList
     }
