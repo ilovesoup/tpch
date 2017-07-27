@@ -27,8 +27,8 @@
         				where
         					l_partkey = ps_partkey
         					and l_suppkey = ps_suppkey
-        					and l_shipdate >= date '1994-01-01'
-        					and l_shipdate < date '1994-01-01' + interval '1' year
+        					and l_shipdate >= '1994-01-01'
+        					and l_shipdate < '1995-01-01' 
         			)
         	)
         	and s_nationkey = n_nationkey

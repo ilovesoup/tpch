@@ -20,13 +20,26 @@ object TestFramework {
     ti.tidbMapDatabase("tpch")
 
     val tests: Array[Tpch] = Array(
+      new Tpch1(spark, prop),
+//      new Tpch2(spark, prop),
+      new Tpch3(spark, prop),
+      new Tpch4(spark, prop),
+      new Tpch5(spark, prop),
+      new Tpch6(spark, prop),
+      new Tpch7(spark, prop),
+      new Tpch8(spark, prop),
+      new Tpch9(spark, prop),
+      new Tpch10(spark, prop),
       new Tpch11(spark, prop),
       new Tpch12(spark, prop),
       new Tpch13(spark, prop),
+      new Tpch14(spark, prop),
       new Tpch16(spark, prop),
       new Tpch17(spark, prop),
-      new Tpch18(spark, prop),
-      new Tpch19(spark, prop)
+//      new Tpch19(spark, prop),
+      new Tpch20(spark, prop),
+//      new Tpch21(spark, prop),
+      new Tpch22(spark, prop)
     )
 
     tests.foreach {
