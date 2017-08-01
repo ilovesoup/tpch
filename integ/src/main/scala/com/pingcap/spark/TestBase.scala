@@ -1,25 +1,40 @@
+/*
+ *
+ * Copyright 2017 PingCAP, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
 package com.pingcap.spark
-import java.sql.DriverManager
 import java.util.Properties
 
 import org.apache.spark.sql.SparkSession
 
 import scala.collection.mutable.ArrayBuffer
 
-/**
-  * Created by ilovesoup1 on 26/07/2017.
-  */
-abstract class Tpch(val spark: SparkSession, val prop: Properties) {
+abstract class TestBase(val spark: SparkSession, val prop: Properties) {
 
   protected def tidbQuery: String
-  protected def sparkQuery: String
+  protected def sparkQuery: String = s"${tidbQuery}"
+
   def testName(): String = getClass.getSimpleName
 
   def test() = {
+    val jdbc = new JDBCWrapper(prop)
     println("================= Query TiSpark =================\n")
     val actual: List[List[Any]] = querySpark()
     println("================= Query TiDB =================\n")
-    val baseline: List[List[Any]] = queryTiDB(prop, "tpch", tidbQuery)
+    val baseline: List[List[Any]] = jdbc.queryTiDB(tidbQuery)._2
 
     val result = compResult(actual, baseline)
     if (!result) {
@@ -99,28 +114,5 @@ abstract class Tpch(val spark: SparkSession, val prop: Properties) {
       }
       rowRes.toList
     }).toList
-  }
-
-  def queryTiDB(prop: Properties, jdbcDatabase: String, query: String): List[List[Any]] = {
-    val jdbcUsername = prop.getProperty("tidbuser")
-    val jdbcHostname = prop.getProperty("tidbaddr")
-    val jdbcPort = Integer.parseInt(prop.getProperty("tidbport"))
-
-    val jdbcUrl = s"jdbc:mysql://${jdbcHostname}:${jdbcPort}/${jdbcDatabase}?user=${jdbcUsername}"
-    val connection = DriverManager.getConnection(jdbcUrl, jdbcUsername, "")
-    val statement = connection.createStatement()
-    val resultSet = statement.executeQuery(query)
-    val rsMetaData = resultSet.getMetaData();
-
-    val retSet = ArrayBuffer.empty[List[Any]]
-    while (resultSet.next()) {
-      val row = ArrayBuffer.empty[Any]
-
-      for (i <- 1 to rsMetaData.getColumnCount) {
-        row += resultSet.getObject(i)
-      }
-      retSet += row.toList
-    }
-    retSet.toList
   }
 }
