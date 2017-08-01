@@ -38,9 +38,15 @@ object TestFramework {
     val ti = new TiContext(spark, List(prop.getProperty("pdaddr")))
     ti.tidbMapDatabase("tpch")
 
+<<<<<<< HEAD:integ/src/main/scala/com/pingcap/spark/IntegTest.scala
     val tests: Array[TestBase] = Array(
       new Tpch1(spark, prop),
       new Tpch2(spark, prop),
+=======
+    val tests: Array[Tpch] = Array(
+      new Tpch1(spark, prop),
+//      new Tpch2(spark, prop),
+>>>>>>> e4f404704bf0e5f4787f73f49f3a013cd056ac7d:integ/src/main/scala/com/pingcap/spark/TestFramework.scala
       new Tpch3(spark, prop),
       new Tpch4(spark, prop),
       new Tpch5(spark, prop),
@@ -49,6 +55,7 @@ object TestFramework {
       new Tpch8(spark, prop),
       new Tpch9(spark, prop),
       new Tpch10(spark, prop),
+<<<<<<< HEAD:integ/src/main/scala/com/pingcap/spark/IntegTest.scala
       new Tpch11(spark, prop),
       new Tpch12(spark, prop),
       new Tpch13(spark, prop),
@@ -56,13 +63,18 @@ object TestFramework {
       new Tpch16(spark, prop),
       new Tpch17(spark, prop),
       new Tpch18(spark, prop),
+=======
+>>>>>>> e4f404704bf0e5f4787f73f49f3a013cd056ac7d:integ/src/main/scala/com/pingcap/spark/TestFramework.scala
       new Tpch11(spark, prop),
       new Tpch12(spark, prop),
       new Tpch13(spark, prop),
+      new Tpch14(spark, prop),
       new Tpch16(spark, prop),
       new Tpch17(spark, prop),
-      new Tpch18(spark, prop),
-      new Tpch19(spark, prop)
+//      new Tpch19(spark, prop),
+      new Tpch20(spark, prop),
+//      new Tpch21(spark, prop),
+      new Tpch22(spark, prop)
     )
 
     tests.filter(test => needRun(test.testName(), prop)).foreach {
